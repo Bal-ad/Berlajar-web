@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Game Page</title>
+    <style>
+        body {
+            background-color: seagreen;
+            color: silver; /*color ayat*/
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding-top: 30px;
+        }
+
+        .menu-bar {
+            background-color: white;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .menu-bar a {
+                color: black;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 16px;
+                transition: 0.2s;
+         }
+
+         .menu-bar a:hover {
+                    color: hotpink;
+          }
+
+        /*Kawasan game or box*/
+        #gamebox 
+        {
+            width:600px;
+            height: 200px;
+            border-bottom: 4px solid white;
+            margin: 50px auto;
+            position: relative;
+            overflow:hidden;
+            background-color: rgba(0,0,0,0.2);
+        }
+        /*crerate dino character*/
+        #dino 
+        {
+            width: 40px;
+            height: 40px;
+            background-color: pink;
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+        }
+        /*animasi jump*/
+        .jump
+        {
+            animation: jumpAnim 0.5s linear;
+        }
+        @keyframes jumpAnim
+        {
+            0% {bottom:0;}
+            50% {bottom:100px;}
+            100% {bottom: 0;}
+        }
+        /*halanagan kaktus or lain*/
+        #obstacles {
+            width: 20px;
+            height: 40px;
+            background-color: red;
+            position: absolute;
+            bottom: 0;
+            left: 600px;
+            animation: blockAnim 1.5s infinite linear;
+        }
+        @keyframes blockAnim {
+            0% {
+                left: 600px;
+            }
+
+            100% {
+                left: -20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!--HTML: MENU -->
+    <div class="menu-bar">
+        <a href="index.html">Utama</a>
+        <a href="profil.html">PROFIL</a>
+        <a href="projek.html">Project</a>
+        <a href="gamedino.html">Game</a>
+    </div>
+    <h1>Game Simple</h1>    
+    <p>Tekan <strong>SPACEBAR</strong> atau <strong>KLIK SKRIN</strong> untuk lompat!</p>
+    <h2 id="scoreVisual">Skor: 0</h2>
+
+    <!--Box Game-->
+    <div id="gamebox" onclick="jump()">
+        <div id="dino"></div>
+        <div id="obstacles"></div>
+    </div>
+
+    <script>
+        const dino = document.getElementById("dino");
+        const obstacles = document.getElementById("obstacles");
+        const scoreVisual = document.getElementById("scoreVisual");
+        let score = 0;
+        let isAlive = true;
+
+        //jUMP FUNGSI
+        function jump()
+        {
+        if (dino.classList != "jump" && isAlive)
+        {
+        dino.classList.add("jump");
+
+        setTimeout(function ()
+        {
+        dino.classList.remove("jump");
+        }, 500);
+        }
+        }
+        
+        // Kira Skor & Check Langgar (Collision)
+        let checkDead = setInterval(function () {
+            if (!isAlive) return;
+
+            // Dapatkan posisi semasa Dino dan Kaktus
+            let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
+            let obstacleLeft = parseInt(window.getComputedStyle(obstacles).getPropertyValue("left"));
+
+            // Logik kalau langgar
+            if (obstacleLeft < 90 && obstacleLeft > 50 && dinoTop <= 40) {
+                // Game Over
+                obstacles.style.animation = "none";
+                obstacles.style.display = "none";
+                isAlive = false;
+                alert("GAME OVER! Skor Akhir: " + score + "\nRefresh page untuk main balik.");
+            } else {
+                // Tambah skor selagi hidup
+                score++;
+                scoreVisual.innerText = "Skor: " + Math.floor(score / 10);
+            }
+        }, 10);
+
+
+        //spacebr untk lompat
+        document.addEventListener("keydown", function (event)
+        {
+            if (event.code === "Space")
+        { jump(); }
+        });
+
+    </script>
+
+
+</body>
+</html>
