@@ -58,6 +58,16 @@
             font-size: 14px;
             letter-spacing: 1px;
         }
+        /*border gambar utama*/
+        .gambar-utama {
+            width: 150px; /* Ubah saiz lebar gambar */
+            height: 150px; /* Ubah saiz tinggi gambar */
+            border-radius: 50%; /* Ini yang buat gambar jadi bulat */
+            object-fit: cover; /* Supaya gambar tak penyek kalau ratio lari */
+            border: 3px solid rosybrown; /* Kasi border warna rosybrown macam tema awak */
+            margin: 20px auto; /* Kasi dia ada jarak atas bawah */
+            display: block; /* Supaya dia duduk tengah-tengah */
+        }
 
         /* menu bar atas*/
         .menu-bar {
@@ -114,7 +124,7 @@
 
     <!--HTML: Kad profil-->
     <div class="kad-profil">
-        <img src="https://picsum.photos/150" alt="Profil Gambar" />
+        <img src="bal-mu.jpeg" alt=" Profil Gambar" class="gambar-utama" />
         <h2>Abang developer</h2>
         <p class="jawatan">Web developer</p>
         <p> Tengah Uppgrade diri</p>
